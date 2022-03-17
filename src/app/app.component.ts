@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormControlName, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { first } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-root',
@@ -9,17 +12,27 @@ import { FormBuilder, FormControlName, FormGroup } from '@angular/forms';
 
 
 export class AppComponent {
-  title = 'AngularUI';
+
   form!: FormGroup;
+    loading = false;
+    submitted = false;
 
-  constructor(
-    private formBuilder: FormBuilder
-) { }
+    constructor(
+        private formBuilder: FormBuilder,
+        private route: ActivatedRoute,
+        private router: Router,
+    ) { }
 
-ngOnInit() {
-  this.form = this.formBuilder.group({
+    ngOnInit() {
+        this.form = this.formBuilder.group({
+            firstName: ['', Validators.required],
+            lastName: ['', Validators.required],
+            username: ['', Validators.required],
+            password: ['', [Validators.required, Validators.minLength(6)]]
+        });
+    }
 
-  });
-}
 
+    onSubmit() {
+    }
 }
